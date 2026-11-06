@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Circuit House – Electronics Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f4;--surface:#fff;--ink:#14202b;--muted:#5b6876;--line:#d5dce3;--accent:#2447f5;--accent-ink:#fff;--hl:#e8f04a;--hl-ink:#14202b;--ok:#13795b;--err:#b3261e;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e141a;--surface:#17202a;--ink:#eaf0f5;--muted:#9aa8b5;--line:#2a3745;--accent:#6f8bff;--accent-ink:#0e141a;--ok:#4cc9a0;--err:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e141a;--surface:#17202a;--ink:#eaf0f5;--muted:#9aa8b5;--line:#2a3745;--accent:#6f8bff;--accent-ink:#0e141a;--ok:#4cc9a0;--err:#ff8a80;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;line-height:1.1;margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;background:var(--accent);display:inline-block;border-radius:3px 50% 3px 50%}
+nav{display:flex;gap:18px;margin-left:auto;align-items:center}
+nav a{color:var(--muted);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--ink)}
+.btn{border:1px solid var(--ink);background:transparent;border-radius:8px;padding:9px 14px;font-weight:600}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.cartbtn{position:relative}
+.cartbtn b{background:var(--hl);color:var(--hl-ink);border-radius:99px;padding:0 7px;margin-left:6px;font-size:13px}
+.hero{padding:48px 0 28px;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:end}
+.hero h1{font-size:clamp(36px,6vw,68px);font-weight:800;letter-spacing:-.03em}
+.hero p{color:var(--muted);max-width:46ch;margin:16px 0 0}
+.searchbox{background:var(--surface);border:2px solid var(--ink);border-radius:12px;display:flex;padding:6px}
+.searchbox input{flex:1;border:0;background:transparent;padding:10px 12px;min-width:0;outline:0}
+.searchbox:focus-within{border-color:var(--accent)}
+.perks{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;color:var(--muted);font-size:14px}
+.perks span::before{content:"✓ ";color:var(--ok);font-weight:700}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 0 20px;border-bottom:1px solid var(--line)}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 14px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tools select{margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+.count{color:var(--muted);font-size:14px;padding:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px;padding-bottom:56px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{aspect-ratio:4/3;display:grid;place-items:center;background:var(--bg);color:var(--accent);position:relative;cursor:pointer;border:0;width:100%}
+.thumb svg{width:44%;height:auto}
+.tag{position:absolute;top:10px;left:10px;background:var(--hl);color:var(--hl-ink);font-size:12px;font-weight:600;border-radius:6px;padding:2px 8px}
+.info{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.info h3{font-size:18px}
+.info small{color:var(--muted)}
+.row{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:10px}
+.price{font:800 22px "Bricolage Grotesque",sans-serif}
+.price s{font:400 13px "IBM Plex Sans",sans-serif;color:var(--muted);margin-left:6px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px 0}
+.band{background:var(--ink);color:var(--bg);padding:40px 0}
+.band .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.band h3{font-size:18px;margin-bottom:6px}
+.band p{margin:0;opacity:.75;font-size:15px}
+footer{padding:28px 0;color:var(--muted);font-size:14px}
+.overlay{position:fixed;inset:0;background:rgba(10,16,22,.55);z-index:40;display:none}
+.overlay.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);z-index:50;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dh h2{font-size:24px}
+.dbody{flex:1;overflow:auto;padding:8px 20px}
+.item{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.item .mini{width:56px;height:56px;background:var(--bg);border-radius:10px;display:grid;place-items:center;color:var(--accent)}
+.item .mini svg{width:60%}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;margin-top:4px}
+.qty button{border:0;background:transparent;width:30px;height:28px;font-size:18px}
+.qty span{min-width:24px;text-align:center}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:0 0 0 8px;font-size:13px}
+.dfoot{padding:16px 20px;border-top:1px solid var(--line)}
+.tot{display:flex;justify-content:space-between;margin:4px 0}
+.tot.big{font:800 22px "Bricolage Grotesque",sans-serif;margin-top:10px}
+.ship{height:6px;background:var(--bg);border-radius:9px;overflow:hidden;margin:8px 0 4px}
+.ship i{display:block;height:100%;background:var(--ok);transition:width .3s}
+.modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:16px;overflow:auto}
+.modal.on{display:grid}
+.box{background:var(--surface);border-radius:16px;padding:24px;width:min(520px,100%);max-height:100%;overflow:auto}
+.box h2{font-size:28px;margin-bottom:12px}
+label{display:block;font-weight:500;font-size:14px;margin-top:12px}
+.box input,.box select{width:100%;margin-top:4px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.err{color:var(--err);font-size:13px;min-height:18px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,40px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;opacity:0;transition:.25s;z-index:70;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:760px){.hero{grid-template-columns:1fr}nav a.hide{display:none}.two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="logo" href="#top"><i></i>Circuit House</a>
+  <nav><a class="hide" href="#shop">Shop</a><a class="hide" href="#about">Why us</a>
+  <button class="btn cartbtn" id="openCart" aria-label="Open cart">Cart<b id="cartN">0</b></button></nav>
+</div></header>
+
+<main id="top">
+<div class="wrap hero">
+  <div><h1>Good electronics, fairly priced.</h1><p>Phones, laptops, audio and more. Every item ships with a 2-year warranty and 30-day returns.</p></div>
+  <div><div class="searchbox"><input id="q" type="search" placeholder="Search phones, headphones, laptops" aria-label="Search products"></div>
+  <div class="perks"><span>Free shipping over $100</span><span>2-year warranty</span><span>30-day returns</span></div></div>
+</div>
+
+<div class="wrap" id="shop">
+  <div class="tools" id="chips"></div>
+  <div class="tools" style="border:0;padding:12px 0 0"><span class="count" id="count" style="padding:0"></span>
+  <select id="sort" aria-label="Sort products"><option value="feat">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option><option value="az">Name: A to Z</option></select></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<section class="band" id="about"><div class="wrap">
+  <div><h3>Tested before shipping</h3><p>Each device is powered on and checked by our technicians.</p></div>
+  <div><h3>Real support</h3><p>Questions about setup or repairs? Talk to a person, not a bot.</p></div>
+  <div><h3>Easy returns</h3><p>Changed your mind? Send it back within 30 days for a full refund.</p></div>
+</div></section>
+</main>
+<footer><div class="wrap">© 2026 Circuit House. Demo store: no real payments are taken.</div></footer>
+
+<div class="overlay" id="ov"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="dh"><h2>Your cart</h2><button class="btn" id="closeCart">Close</button></div>
+  <div class="dbody" id="cartBody"></div>
+  <div class="dfoot" id="cartFoot"></div>
+</aside>
+
+<div class="modal" id="checkout" role="dialog" aria-modal="true" aria-labelledby="ckT"><div class="box" id="ckBox"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const ICON={
+phone:'<rect x="16" y="5" width="16" height="38" rx="3"/><path d="M22 38h4"/>',
+laptop:'<rect x="9" y="11" width="30" height="22" rx="2"/><path d="M4 38h40"/>',
+audio:'<path d="M10 30v-6a14 14 0 0 1 28 0v6"/><rect x="8" y="28" width="8" height="12" rx="3"/><rect x="32" y="28" width="8" height="12" rx="3"/>',
+speaker:'<rect x="13" y="5" width="22" height="38" rx="5"/><circle cx="24" cy="30" r="7"/><circle cx="24" cy="14" r="3"/>',
+watch:'<rect x="13" y="13" width="22" height="22" rx="7"/><path d="M18 13l1-8h10l1 8M18 35l1 8h10l1-8M24 19v5l3 3"/>',
+camera:'<rect x="5" y="14" width="38" height="25" rx="4"/><circle cx="24" cy="26" r="7"/><path d="M16 14l2-5h12l2 5"/>',
+tv:'<rect x="4" y="8" width="40" height="27" rx="2"/><path d="M16 41h16M24 35v6"/>',
+game:'<rect x="5" y="16" width="38" height="18" rx="9"/><path d="M15 22v6M12 25h6"/><circle cx="31" cy="23" r="1.5"/><circle cx="35" cy="27" r="1.5"/>'};
+const svg=k=>`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+const P=[
+{id:1,n:"Nova X Smartphone",c:"Phones",p:699,o:799,d:"6.5-inch OLED, 256 GB, 50 MP camera",i:"phone",t:"Sale"},
+{id:2,n:"Pocket Lite Phone",c:"Phones",p:249,d:"6.1-inch display, 128 GB, 2-day battery",i:"phone"},
+{id:3,n:"Slate 14 Laptop",c:"Laptops",p:849,d:"14-inch, 16 GB RAM, 512 GB SSD",i:"laptop",t:"Popular"},
+{id:4,n:"Studio Pro 16",c:"Laptops",p:1499,d:"16-inch 120 Hz display, 32 GB RAM, 1 TB SSD",i:"laptop"},
+{id:5,n:"Quiet ANC Headphones",c:"Audio",p:179,o:229,d:"Active noise cancelling, 40 h battery",i:"audio",t:"Sale"},
+{id:6,n:"Bud Air Earbuds",c:"Audio",p:79,d:"Wireless, water resistant, charging case",i:"audio"},
+{id:7,n:"Boom Mini Speaker",c:"Audio",p:59,d:"Portable Bluetooth, 12 h playtime",i:"speaker"},
+{id:8,n:"Pulse Fit Watch",c:"Wearables",p:129,d:"Heart rate, GPS, 7-day battery",i:"watch",t:"New"},
+{id:9,n:"Frame M4 Camera",c:"Cameras",p:999,d:"24 MP mirrorless, 4K video, kit lens",i:"camera"},
+{id:10,n:"Vista 55 Smart TV",c:"TV",p:529,o:599,d:"55-inch 4K HDR, built-in streaming apps",i:"tv",t:"Sale"},
+{id:11,n:"Core Console",c:"Gaming",p:449,d:"1 TB storage, 4K gaming, one controller",i:"game",t:"Popular"},
+{id:12,n:"Arc Gamepad",c:"Gaming",p:59,d:"Wireless controller, USB-C, 30 h battery",i:"game"}];
+const money=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const $=id=>document.getElementById(id);
+let cat="All",cart={},q="",sort="feat";
+try{cart=JSON.parse(localStorage.getItem("ch-cart")||"{}")}catch(e){cart={}}
+const save=()=>{try{localStorage.setItem("ch-cart",JSON.stringify(cart))}catch(e){}};
+
+function chips(){const cs=["All",...new Set(P.map(x=>x.c))];
+ $("chips").innerHTML=cs.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");}
+function grid(){
+ let L=P.filter(x=>(cat==="All"||x.c===cat)&&(x.n+x.c+x.d).toLowerCase().includes(q.toLowerCase()));
+ if(sort==="lo")L.sort((a,b)=>a.p-b.p);if(sort==="hi")L.sort((a,b)=>b.p-a.p);if(sort==="az")L.sort((a,b)=>a.n.localeCompare(b.n));
+ $("count").textContent=L.length+(L.length===1?" product":" products");
+ $("grid").innerHTML=L.length?L.map(x=>`<article class="card"><button class="thumb" data-add="${x.id}" aria-label="Add ${x.n} to cart">${x.t?`<span class="tag">${x.t}</span>`:""}${svg(x.i)}</button>
+ <div class="info"><small>${x.c}</small><h3>${x.n}</h3><small>${x.d}</small>
+ <div class="row"><span class="price">${money(x.p)}${x.o?`<s>${money(x.o)}</s>`:""}</span><button class="btn pri" data-add="${x.id}">Add to cart</button></div></div></article>`).join("")
+ :`<div class="empty">No products match “${q.replace(/</g,"&lt;")}”. Try another word or choose All.</div>`;}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("on"),1800);}
+const items=()=>Object.keys(cart).map(id=>({...P.find(x=>x.id==id),q:cart[id]})).filter(x=>x.id);
+const sub=()=>items().reduce((s,x)=>s+x.p*x.q,0);
+const shipCost=s=>s===0||s>=100?0:8;
+function renderCart(){
+ const L=items(),n=L.reduce((s,x)=>s+x.q,0),s=sub();$("cartN").textContent=n;
+ $("cartBody").innerHTML=L.length?L.map(x=>`<div class="item"><div class="mini">${svg(x.i)}</div><div><strong>${x.n}</strong><br><span class="qty"><button data-m="${x.id}" aria-label="Decrease quantity">−</button><span>${x.q}</span><button data-p="${x.id}" aria-label="Increase quantity">+</button></span><button class="link" data-r="${x.id}">Remove</button></div><strong>${money(x.p*x.q)}</strong></div>`).join("")
+ :`<p style="color:var(--muted);padding:24px 0">Your cart is empty. Add a product to get started.</p>`;
+ const left=Math.max(0,100-s);
+ $("cartFoot").innerHTML=L.length?`<div style="font-size:14px;color:var(--muted)">${left?`Add ${money(left)} more for free shipping`:"You’ve got free shipping"}</div><div class="ship"><i style="width:${Math.min(100,s)}%"></i></div>
+ <div class="tot"><span>Subtotal</span><span>${money(s)}</span></div><div class="tot"><span>Shipping</span><span>${shipCost(s)?money(8):"Free"}</span></div>
+ <div class="tot big"><span>Total</span><span>${money(s+shipCost(s))}</span></div><button class="btn pri" id="goCk" style="width:100%;margin-top:12px;padding:12px">Checkout</button>`:"";}
+function setCart(){save();renderCart();}
+function drawer(on){$("drawer").classList.toggle("on",on);$("ov").classList.toggle("on",on);$("drawer").setAttribute("aria-hidden",!on);if(on)$("closeCart").focus();}
+function checkout(){
+ const s=sub(),t=s+shipCost(s);
+ $("ckBox").innerHTML=`<h2 id="ckT">Checkout</h2><form id="ckForm" novalidate>
+ <label>Full name<input name="name" autocomplete="name" required></label>
+ <label>Email<input name="email" type="email" autocomplete="email" required></label>
+ <label>Delivery address<input name="addr" autocomplete="street-address" required></label>
+ <div class="two"><label>City<input name="city" autocomplete="address-level2" required></label><label>Phone<input name="phone" type="tel" autocomplete="tel" required></label></div>
+ <label>Payment method<select name="pay"><option>Pay on delivery</option><option>Mobile money</option><option>Card</option></select></label>
+ <div class="err" id="ckErr" role="alert"></div>
+ <div class="tot big"><span>Total</span><span>${money(t)}</span></div>
+ <div style="display:flex;gap:10px;margin-top:14px"><button type="button" class="btn" id="ckCancel">Back to cart</button><button class="btn pri" style="flex:1">Place order</button></div></form>`;
+ $("checkout").classList.add("on");drawer(false);$("ov").classList.add("on");
+ $("ckForm").elements.name.focus();
+ $("ckCancel").onclick=()=>{closeCk();drawer(true)};
+ $("ckForm").onsubmit=e=>{e.preventDefault();const f=e.target,v=k=>f.elements[k].value.trim();
+  for(const k of["name","email","addr","city","phone"])if(!v(k)){$("ckErr").textContent="Please fill in every field.";f.elements[k].focus();return}
+  if(!/^\S+@\S+\.\S+$/.test(v("email"))){$("ckErr").textContent="Enter a valid email address, like name@example.com.";f.elements.email.focus();return}
+  const ref="CH-"+Math.random().toString(36).slice(2,8).toUpperCase(),first=v("name").split(" ")[0];
+  cart={};setCart();
+  $("ckBox").innerHTML=`<h2 id="ckT">Order placed</h2><p>Thanks, ${first.replace(/</g,"&lt;")}. Your order <strong>${ref}</strong> for ${money(t)} is confirmed. We’ll email updates to ${v("email").replace(/</g,"&lt;")}.</p><button class="btn pri" id="ckDone">Keep shopping</button>`;
+  $("ckDone").onclick=closeCk;};}
+function closeCk(){$("checkout").classList.remove("on");$("ov").classList.remove("on");}
+
+document.addEventListener("click",e=>{const t=e.target.closest("[data-add],[data-c],[data-m],[data-p],[data-r],#goCk,#openCart,#closeCart");if(!t)return;
+ if(t.dataset.add){const id=t.dataset.add;cart[id]=(cart[id]||0)+1;setCart();toast(P.find(x=>x.id==id).n+" added to cart");}
+ else if(t.dataset.c){cat=t.dataset.c;chips();grid();}
+ else if(t.dataset.p){cart[t.dataset.p]++;setCart();}
+ else if(t.dataset.m){if(--cart[t.dataset.m]<=0)delete cart[t.dataset.m];setCart();}
+ else if(t.dataset.r){delete cart[t.dataset.r];setCart();}
+ else if(t.id==="goCk")checkout();
+ else if(t.id==="openCart")drawer(true);
+ else if(t.id==="closeCart")drawer(false);});
+$("ov").onclick=()=>{drawer(false);closeCk();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){drawer(false);closeCk();}});
+$("q").oninput=e=>{q=e.target.value;grid();};
+$("sort").onchange=e=>{sort=e.target.value;grid();};
+chips();grid();renderCart();
+</script>
+</body>
+</html>
